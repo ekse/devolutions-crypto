@@ -16,10 +16,15 @@ runs:
         wasm-pack test --firefox --headless -- --features=wbindgen
         wasm-pack test --chrome --headless -- --features=wbindgen
 
+    - name: Installing dependencies
+      working-directory: ./wrappers/wasm
+      shell: bash
+      run: npm ci
+
     - name: Generating npm package
       working-directory: ./wrappers/wasm
       shell: bash
-      run: sh ./wasm_build.sh
+      run: npm run build:wasm && npm run build
 
     - name: Integration tests
       working-directory: ./wrappers/wasm/tests
